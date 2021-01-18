@@ -1,0 +1,24 @@
+{
+  "name": "slackdoodle",
+  "version": "1.0.0",
+  "description": "Slackbot that sends you a random New Yorker cartoon",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidgoldcode/slackdoodle.git"
+  },
+  "keywords": [],
+  "author": "David Gold",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidgoldcode/slackdoodle/issues"
+  },
+  "homepage": "https://github.com/davidgoldcode/slackdoodle#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0"
+  }
+}
