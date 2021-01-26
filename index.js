@@ -20,18 +20,33 @@ const bot = new App({
   console.log("⚡️ Bolt app is running!");
 })();
 
+const cache = {};
 bot.event("app_mention", async ({ event, client }) => {
-  // To add into slackbot
   let imgUrl = "";
+  let arr = [];
 
-  await cloudinary.v2.api.resources(function (error, result) {
-    imgUrl = result.resources[0].url;
-  });
+  await cloudinary.v2.api.resources(
+    { max_results: 50 },
+    function (error, result) {
+      arr = result.resources;
+    }
+  );
+
+  while (imgUrl === "") {
+    const idx = Math.floor(Math.random() * 20);
+    if (cache[arr[idx].asset_id] !== 1) {
+      imgUrl = arr[idx].url;
+      cache[arr[idx].asset_id] = 1;
+      break;
+    } else {
+      continue;
+    }
+  }
 
   try {
     await client.chat.postMessage({
       channel: event.channel,
-      text: imgUrl,
+      text: "Doodle",
       attachments: [{ image_url: imgUrl, text: imgUrl }],
     });
   } catch (e) {
