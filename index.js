@@ -21,17 +21,20 @@ const bot = new App({
 })();
 
 bot.event("app_mention", async ({ event, client }) => {
+  // To add into slackbot
+  let imgUrl = "";
+
+  await cloudinary.v2.api.resources(function (error, result) {
+    imgUrl = result.resources[0].url;
+  });
+
   try {
     await client.chat.postMessage({
       channel: event.channel,
-      text: `Ask me to see a doodle, and I'll send you a New Yorker cartoon`,
+      text: imgUrl,
+      attachments: [{ image_url: imgUrl, text: imgUrl }],
     });
   } catch (e) {
     console.log(`error responding ${e}`);
   }
-});
-
-// To add into slackbot
-cloudinary.v2.api.resources(function (error, result) {
-  console.log(result, error);
 });
