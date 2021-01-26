@@ -22,28 +22,26 @@ const bot = new App({
 
 const cache = {};
 bot.event("app_mention", async ({ event, client }) => {
-  // To add into slackbot
   let imgUrl = "";
   let arr = [];
 
-  await cloudinary.v2.api.resources(function (error, result) {
-    arr = result.resources;
-  });
+  await cloudinary.v2.api.resources(
+    { max_results: 50 },
+    function (error, result) {
+      arr = result.resources;
+    }
+  );
 
-  for (let i = 0; i < arr.length; i++) {
-    console.log(cache);
-    console.log(cache[arr[i].asset_id] !== 1);
-    if (cache[arr[i].asset_id] !== 1) {
-      imgUrl = arr[i].url;
-      cache[arr[i].asset_id] = 1;
-      console.log("why are you here");
+  while (imgUrl === "") {
+    const idx = Math.floor(Math.random() * 20);
+    if (cache[arr[idx].asset_id] !== 1) {
+      imgUrl = arr[idx].url;
+      cache[arr[idx].asset_id] = 1;
       break;
     } else {
       continue;
     }
   }
-
-  console.log("cache", cache);
 
   try {
     await client.chat.postMessage({
