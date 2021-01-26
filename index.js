@@ -46,8 +46,8 @@ bot.event("app_mention", async ({ event, client }) => {
   try {
     await client.chat.postMessage({
       channel: event.channel,
-      text: "Doodle",
-      attachments: [{ image_url: imgUrl, text: imgUrl }],
+      text: "New Yorker Cartoon",
+      attachments: [{ image_url: imgUrl }],
     });
   } catch (e) {
     console.log(`error responding ${e}`);
